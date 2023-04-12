@@ -7,21 +7,30 @@
 
         </div>
         <div class="clear"></div>
-        <form action="#">
-            <div>
-                <input class="user-input" type="text" name="name" id="name" placeholder="Имя" />
-            </div>
-            <div>
-                <input class="user-input" type="email" name="login" id="name" placeholder="E-mail" />
-            </div>
-            <div>
-
-                <input type="password" name="pass" id="name" placeholder="Пароль" />
-            </div>
+        <form method="post">
+            {% csrf_token %}
+                {{ form.as_div }}
+{#            <div>#}
+{#                <input class="user-input" type="text" name="name" id="name" placeholder="Имя" />#}
+{#            </div>#}
+{#            <div>#}
+{#                <input class="user-input" type="email" name="email" id="name" placeholder="E-mail" />#}
+{#            </div>#}
+{#            <div>#}
+{##}
+{#                <input type="password" name="pass" id="name" placeholder="Пароль" />#}
+{#            </div>#}
             <input type="submit" value="Зарегистрироваться" />
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li class="{{ message.error }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
 
+            {% endif %}
 
-            <a class="registr" href="login.html">
+            <a class="registr" href="{% url 'myauth:login' %}">
                 Вход
             </a>
             <div class="clear"></div>
