@@ -1,3 +1,4 @@
+from _decimal import Decimal
 from unicodedata import category
 
 from django.db import models

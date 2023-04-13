@@ -63,127 +63,176 @@
                 </div>
             </div>
             <div class="Cards">
+                {% for product in products %}
+                    <div class="Card"><a class="Card-picture" href="{% url 'mycatalog:product-details' pk=product.pk %}"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="{% url 'mycatalog:product-details' pk=product.pk %}">{{ product.name }}</a>
+                            </strong>
+                            <div class="Card-description">
+                                <div class="Card-cost"><span class="Card-price">${{ product.price }}</span>
+                                </div>
+                                <div class="Card-category">{{ product.tags.all|slice:"0:2"|join:"/" }}
 
-
-{#                MAIN PRODUCT#}
-                <div class="Card"><a class="Card-picture" href="{% url 'mycatalog:product-details' %}"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
-                    <div class="Card-content">
-                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Corsair Carbide Series Arctic White Steel</a>
-                        </strong>
-                        <div class="Card-description">
-                            <div class="Card-cost"><span class="Card-price">$85.00</span>
-                            </div>
-                            <div class="Card-category">Игры / xbox
-                            </div>
-                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
+                                </div>
+                                <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                <div class="Card"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
-                    <div class="Card-content">
-                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Barand New Phone Smart Business</a>
-                        </strong>
-                        <div class="Card-description">
-                            <div class="Card-cost"><span class="Card-price">$85.00</span>
-                            </div>
-                            <div class="Card-category">Игры / xbox
-                            </div>
-                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="Card"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
-                    <div class="Card-content">
-                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Mavic PRO Mini Drones Hobby RC Quadcopter</a>
-                        </strong>
-                        <div class="Card-description">
-                            <div class="Card-cost"><span class="Card-price">$185.00</span>
-                            </div>
-                            <div class="Card-category">Разработка / xbox
-                            </div>
-                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="Card"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
-                    <div class="Card-content">
-                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Corsair Carbide Series Arctic White Steel</a>
-                        </strong>
-                        <div class="Card-description">
-                            <div class="Card-cost"><span class="Card-price">$210.00</span>
-                            </div>
-                            <div class="Card-category">Медиа / xbox
-                            </div>
-                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="Card hide_md"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
-                    <div class="Card-content">
-                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Corsair Carbide Series Arctic White Steel</a>
-                        </strong>
-                        <div class="Card-description">
-                            <div class="Card-cost"><span class="Card-price">$85.00</span>
-                            </div>
-                            <div class="Card-category">Игры / xbox
-                            </div>
-                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="Card hide_md"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
-                    <div class="Card-content">
-                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Barand New Phone Smart Business</a>
-                        </strong>
-                        <div class="Card-description">
-                            <div class="Card-cost"><span class="Card-price">$85.00</span>
-                            </div>
-                            <div class="Card-category">Игры / xbox
-                            </div>
-                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="Card hide_md hide_1450"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
-                    <div class="Card-content">
-                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Mavic PRO Mini Drones Hobby RC Quadcopter</a>
-                        </strong>
-                        <div class="Card-description">
-                            <div class="Card-cost"><span class="Card-price">$185.00</span>
-                            </div>
-                            <div class="Card-category">Дизайн / xbox
-                            </div>
-                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="Card hide_md hide_1450"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>
-                    <div class="Card-content">
-                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Corsair Carbide Series Arctic White Steel</a>
-                        </strong>
-                        <div class="Card-description">
-                            <div class="Card-cost"><span class="Card-price">$210.00</span>
-                            </div>
-                            <div class="Card-category">Игры / xbox
-                            </div>
-                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+{#                <div class="Card"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>#}
+{#                    <div class="Card-content">#}
+{#                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Barand New Phone Smart Business</a>#}
+{#                        </strong>#}
+{#                        <div class="Card-description">#}
+{#                            <div class="Card-cost"><span class="Card-price">$85.00</span>#}
+{#                            </div>#}
+{#                            <div class="Card-category">Игры / xbox#}
+{#                            </div>#}
+{#                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="Card"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>#}
+{#                    <div class="Card-content">#}
+{#                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Mavic PRO Mini Drones Hobby RC Quadcopter</a>#}
+{#                        </strong>#}
+{#                        <div class="Card-description">#}
+{#                            <div class="Card-cost"><span class="Card-price">$185.00</span>#}
+{#                            </div>#}
+{#                            <div class="Card-category">Разработка / xbox#}
+{#                            </div>#}
+{#                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="Card"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>#}
+{#                    <div class="Card-content">#}
+{#                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Corsair Carbide Series Arctic White Steel</a>#}
+{#                        </strong>#}
+{#                        <div class="Card-description">#}
+{#                            <div class="Card-cost"><span class="Card-price">$210.00</span>#}
+{#                            </div>#}
+{#                            <div class="Card-category">Медиа / xbox#}
+{#                            </div>#}
+{#                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="Card hide_md"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>#}
+{#                    <div class="Card-content">#}
+{#                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Corsair Carbide Series Arctic White Steel</a>#}
+{#                        </strong>#}
+{#                        <div class="Card-description">#}
+{#                            <div class="Card-cost"><span class="Card-price">$85.00</span>#}
+{#                            </div>#}
+{#                            <div class="Card-category">Игры / xbox#}
+{#                            </div>#}
+{#                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="Card hide_md"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>#}
+{#                    <div class="Card-content">#}
+{#                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Barand New Phone Smart Business</a>#}
+{#                        </strong>#}
+{#                        <div class="Card-description">#}
+{#                            <div class="Card-cost"><span class="Card-price">$85.00</span>#}
+{#                            </div>#}
+{#                            <div class="Card-category">Игры / xbox#}
+{#                            </div>#}
+{#                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="Card hide_md hide_1450"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>#}
+{#                    <div class="Card-content">#}
+{#                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Mavic PRO Mini Drones Hobby RC Quadcopter</a>#}
+{#                        </strong>#}
+{#                        <div class="Card-description">#}
+{#                            <div class="Card-cost"><span class="Card-price">$185.00</span>#}
+{#                            </div>#}
+{#                            <div class="Card-category">Дизайн / xbox#}
+{#                            </div>#}
+{#                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="Card hide_md hide_1450"><a class="Card-picture" href="#"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" /></a>#}
+{#                    <div class="Card-content">#}
+{#                        <strong class="Card-title"><a href="{% url 'mycatalog:product-details' %}">Corsair Carbide Series Arctic White Steel</a>#}
+{#                        </strong>#}
+{#                        <div class="Card-description">#}
+{#                            <div class="Card-cost"><span class="Card-price">$210.00</span>#}
+{#                            </div>#}
+{#                            <div class="Card-category">Игры / xbox#}
+{#                            </div>#}
+{#                            <div class="Card-hover"><a class="Card-btn" href="#"><img src="{% static "assets/img/icons/card/cart.svg" %}" alt="cart.svg" /></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
             </div>
             <div class="Pagination">
-                <div class="Pagination-ins"><a class="Pagination-element Pagination-element_prev" href="#"><img src="{% static "assets/img/icons/prevPagination.svg" %}" alt="prevPagination.svg" /></a><a class="Pagination-element Pagination-element_current" href="#"><span class="Pagination-text">1</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">2</span></a><a class="Pagination-element" href="#"><span class="Pagination-text">3</span></a><a class="Pagination-element Pagination-element_prev" href="#"><img src="{% static "assets/img/icons/nextPagination.svg" %}" alt="nextPagination.svg" /></a>
-                </div>
+{#                <span class="step-links">#}
+{#                    {% if products.has_previous %}#}
+{#                        <a href="?page=1">&laquo; first</a>#}
+{#                        <a href="?page={{ products.previous_page_number }}">previous</a>#}
+{#                    {% endif %}#}
+{##}
+{#                    <span class="current">#}
+{#                        Page {{ products.number }} of {{ products.paginator.num_pages }}.#}
+{#                    </span>#}
+{##}
+{#                    {% if products.has_next %}#}
+{#                        <a href="?page={{ products.next_page_number }}">next</a>#}
+{#                        <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>#}
+{#                    {% endif %}#}
+{#                </span>#}
+
+                    <div class="Pagination-ins">
+                        <a class="Pagination-element Pagination-element_prev" {% if products.has_previous %} href="?page={{ products.previous_page_number }}" {% endif %}>
+                            <img src="{% static "assets/img/icons/prevPagination.svg" %}" alt="prevPagination.svg"/>
+                        </a>
+                        {% if products.has_previous %}
+                            {% if products.number == products.paginator.num_pages %}
+                            <a class="Pagination-element" href="?page={{ products.previous_page_number|add:"-1" }}">
+                                <span class="Pagination-text">{{ products.previous_page_number|add:"-1" }}</span>
+                            </a>
+                            {% endif %}
+                            <a class="Pagination-element" href="?page={{ products.previous_page_number }}">
+                                <span class="Pagination-text">{{ products.previous_page_number }}</span>
+{#                                <span class="Pagination-text">{{ products.number|add:"-1" }}</span>#}
+                            </a>
+                        {% endif %}
+
+                        <a class="Pagination-element Pagination-element_current" href="#">
+                            <span class="Pagination-text">{{ products.number }}</span>
+                        </a>
+                        {% if products.has_next %}
+                            <a class="Pagination-element" href="?page={{ products.next_page_number }}">
+                                <span class="Pagination-text">{{ products.next_page_number }}</span>
+                            </a>
+                            {% if products.number == 1 %}
+                                <a class="Pagination-element" href="?page={{ products.next_page_number|add:"1" }}">
+                                    <span class="Pagination-text">{{ products.next_page_number|add:"1" }}</span>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+{#                        {% if products.has_next %}#}
+{#                            <a href="?page={{ products.paginator.num_pages }}">{{ products.paginator.num_pages }}</a>#}
+{#                        {% endif %}#}
+
+                        <a class="Pagination-element Pagination-element_prev" {% if products.has_next %} href="?page={{ products.next_page_number }}" {% endif %}>
+                            <img src="{% static "assets/img/icons/nextPagination.svg" %}" alt="nextPagination.svg"/>
+                        </a>
+                    </div>
             </div>
         </div>
     </div>

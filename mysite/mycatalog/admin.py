@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ProductCategory, Product, ProductTags, ProductImages
+from .models import ProductCategory, Product, ProductTags, ProductImages, ProductReview
 
 
 class CategoryInline(admin.TabularInline):
@@ -60,6 +60,8 @@ class Product(admin.ModelAdmin):
     list_display = "pk", "name", "category", "price"
     list_display_links = "pk", "name"
     ordering = "name", "category"
+    search_fields = "pk", "name"
+    list_filter = "category",
     fieldsets = [
         (None, {
             "fields": ("name", "active"),
@@ -69,3 +71,11 @@ class Product(admin.ModelAdmin):
             "classes": ("wide", "collapse",),
         })
     ]
+
+
+@admin.register(ProductReview)
+class ProductReviewAdmin(admin.ModelAdmin):
+    list_display = "user", "product"
+    list_display_links = "user",
+    verbose_name = "Отзыв"
+    verbose_name_plural = "Отзывы"
