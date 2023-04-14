@@ -14,7 +14,7 @@ class Order(models.Model):
     DELIVERY_TYPE_CHOICES = [('Common', 'Обычная доставка'), ('Express', 'Экспресс доставка')]
     ORDER_STATUS = [('Not paid', 'Не оплачен'), ('Paid', 'Оплачен'), ('Delivery', 'Доставляется'), ('Awaiting', 'Ожидает выдачи'), ('Done', 'Выдан')]
 
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name="Пользователь")
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='order', verbose_name="Пользователь")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
     delivery_type = models.CharField(max_length=10, choices=DELIVERY_TYPE_CHOICES, default='Common', verbose_name="Тип доставки")  # .label, чтобы вывести значение

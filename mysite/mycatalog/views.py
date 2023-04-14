@@ -39,14 +39,23 @@ class ProductDetailsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.request.user)
+        # context['add_to_cart_form'] = AddToCartForm()
         context["profile"] = UserProfile.objects.get(user=self.request.user)
         return context
 
     def post(self, request, *args, **kwargs):
-        print(request.POST.get("amount"))
-        print(request.POST.get("product_id"))
-        print(request.user)
+        if "add_to_cart" in request.POST:
+            # add_to_cart_form = AddToCartForm(request.POST)
+            # if add_to_cart_form.is_valid():
+            print(request.POST.get("amount"))
+            print(request.POST.get("product_id"))
+            print(request.user)
+
+        elif "submit_review" in request.POST:
+            print(request.POST)
+            print(request.POST.get("review"))
+            print(request.POST.get("product_id"))
+            print(request.user)
         return redirect(request.path)
 
 
