@@ -1,5 +1,7 @@
 {% extends 'catalog/base.html' %}
 {% load static %}
+{% load mycatalog_tags %}
+{% load myprofile_tags %}
 
 {% block middle-content %}
     <div class="Section Section_column Section_columnLeft">
@@ -11,10 +13,19 @@
                     </strong>
                 </header>
                 <div class="Section-columnContent">
-                    <form class="form" action="#" method="post">
+                    <form class="form" method="post">
+                        {% csrf_token %}
                         <div class="form-group">
                             <div class="range Section-columnRange">
-                                <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="7" data-max="50" data-from="7" data-to="27" />
+                                {% if params.price %}
+                                    {% with params.price|split:';' as price_params %}
+
+                                    <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="0" data-max={{ "max_value"| max }} data-from={{ price_params.0 }} data-to={{ price_params.1 }} />
+                                    {% endwith %}
+                                {% else %}
+                                    <input class="range-line" id="price" name="price" type="text" data-type="double" data-min="0" data-max={{ "max_value"| max }} data-from="0" data-to="700" />
+                                {% endif %}
+
                                 <div class="range-price">Цена:&#32;
                                     <div class="rangePrice">
                                     </div>
@@ -22,44 +33,76 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input class="form-input form-input_full" id="title" name="title" type="text" placeholder="Название" />
+                            {{ form.name }}
+{#                            <input class="form-input form-input_full" id="title" name="title" type="text" placeholder="Название" />#}
                         </div>
                         <div class="form-group">
                             <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
                         </div>
                         <div class="form-group">
                             <label class="toggle">
-                                <input type="checkbox" /><span class="toggle-box"></span><span class="toggle-text">Только товары в наличии</span>
+                                {{ form.available }}<span class="toggle-box"></span><span class="toggle-text">Только товары в наличии</span>
                             </label>
                         </div>
+{#                        <div class="form-group">#}
+{#                            <label class="toggle">#}
+{#                                <input type="checkbox" /><span class="toggle-box"></span><span class="toggle-text">С бесплатной доставкой</span>#}
+{#                            </label>#}
+{#                        </div>#}
                         <div class="form-group">
-                            <label class="toggle">
-                                <input type="checkbox" /><span class="toggle-box"></span><span class="toggle-text">С бесплатной доставкой</span>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <div class="buttons"><a class="btn btn_square btn_dark btn_narrow" href="#">Фильтр</a>
+                            <div class="buttons"><button class="btn btn_square btn_dark btn_narrow" type="submit">Фильтр</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="Section-columnSection">
-                <header class="Section-header">
-                    <strong class="Section-title">Популярные тэги
-                    </strong>
-                </header>
-                <div class="Section-columnContent">
-                    <div class="buttons"><a class="btn btn_default btn_sm" href="#">Видео</a><a class="btn btn_default btn_sm" href="#">Разработка</a><a class="btn btn_default btn_sm" href="#">Игры</a><a class="btn btn_default btn_sm" href="#">Asus</a><a class="btn btn_default btn_sm" href="#">Разработка</a><a class="btn btn_default btn_sm" href="#">Видео</a>
-                    </div>
-                </div>
-            </div>
+{#            <div class="Section-columnSection">#}
+{#                <header class="Section-header">#}
+{#                    <strong class="Section-title">Популярные тэги#}
+{#                    </strong>#}
+{#                </header>#}
+{#                <div class="Section-columnContent">#}
+{#                    <div class="buttons"><a class="btn btn_default btn_sm" href="#">Видео</a><a class="btn btn_default btn_sm" href="#">Разработка</a><a class="btn btn_default btn_sm" href="#">Игры</a><a class="btn btn_default btn_sm" href="#">Asus</a><a class="btn btn_default btn_sm" href="#">Разработка</a><a class="btn btn_default btn_sm" href="#">Видео</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
         </div>
         <div class="Section-content">
             <div class="Sort">
                 <div class="Sort-title">Сортировать по:
                 </div>
-                <div class="Sort-variants"><a class="Sort-sortBy Sort-sortBy_dec" href="#">Популярности</a><a class="Sort-sortBy" href="#">Цене</a><a class="Sort-sortBy" href="#">Отзывам</a><a class="Sort-sortBy Sort-sortBy_inc" href="#">Новизне</a>
+                <div class="Sort-variants">
+                    {% if request.GET.sort_by == 'popular' %}
+                      <a class="Sort-sortBy Sort-sortBy_inc" href="#">Популярности</a>
+                    {% elif request.GET.sort_by == '-popular' %}
+                      <a class="Sort-sortBy Sort-sortBy_dec" href="#">Популярности</a>
+                    {% else %}
+                      <a class="Sort-sortBy" href="#">Популярности</a>
+                    {% endif %}
+
+                    {% if request.GET.sort_by == 'price' %}
+                      <a class="Sort-sortBy Sort-sortBy_inc" href="?sort_by=-price">Цене</a>
+                    {% elif request.GET.sort_by == '-price' %}
+                      <a class="Sort-sortBy Sort-sortBy_dec" href="?sort_by=price">Цене</a>
+                    {% else %}
+                      <a class="Sort-sortBy" href="?sort_by=price">Цене</a>
+                    {% endif %}
+
+                    {% if request.GET.sort_by == 'reviews' %}
+                      <a class="Sort-sortBy Sort-sortBy_inc" href="?sort_by=-reviews">Отзывам</a>
+                    {% elif request.GET.sort_by == '-reviews' %}
+                      <a class="Sort-sortBy Sort-sortBy_dec" href="?sort_by=reviews">Отзывам</a>
+                    {% else %}
+                      <a class="Sort-sortBy" href="?sort_by=reviews">Отзывам</a>
+                    {% endif %}
+
+                    {% if request.GET.sort_by == 'date' %}
+                      <a class="Sort-sortBy Sort-sortBy_inc" href="?sort_by=-date">Новизне</a>
+                    {% elif request.GET.sort_by == '-date' %}
+                      <a class="Sort-sortBy Sort-sortBy_dec" href="?sort_by=date">Новизне</a>
+                    {% else %}
+                      <a class="Sort-sortBy" href="?sort_by=date">Новизне</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="Cards">
@@ -195,32 +238,35 @@
 {#                        <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>#}
 {#                    {% endif %}#}
 {#                </span>#}
-
                     <div class="Pagination-ins">
-                        <a class="Pagination-element Pagination-element_prev" {% if products.has_previous %} href="?page={{ products.previous_page_number }}" {% endif %}>
+{#                        <a class="Pagination-element Pagination-element_prev" {% if products.has_previous %} href="?sort_by={{ sort_by }}&amp;page={{ products.previous_page_number }}" {% endif %}>#}
+                        <a class="Pagination-element Pagination-element_prev" {% if products.has_previous %} href="?{{ params.urlencode }}&amp;page={{ products.previous_page_number }}" {% endif %}>
                             <img src="{% static "assets/img/icons/prevPagination.svg" %}" alt="prevPagination.svg"/>
                         </a>
                         {% if products.has_previous %}
                             {% if products.number == products.paginator.num_pages %}
-                            <a class="Pagination-element" href="?page={{ products.previous_page_number|add:"-1" }}">
+{#                            <a class="Pagination-element" href="?sort_by={{ sort_by }}&amp;page={{ products.previous_page_number|add:"-1" }}">#}
+                            <a class="Pagination-element" href="?{{ params.urlencode }}&amp;page={{ products.previous_page_number|add:"-1" }}">
                                 <span class="Pagination-text">{{ products.previous_page_number|add:"-1" }}</span>
                             </a>
                             {% endif %}
-                            <a class="Pagination-element" href="?page={{ products.previous_page_number }}">
+                            <a class="Pagination-element" href="?{{ params.urlencode }}&amp;page={{ products.previous_page_number }}">
                                 <span class="Pagination-text">{{ products.previous_page_number }}</span>
 {#                                <span class="Pagination-text">{{ products.number|add:"-1" }}</span>#}
                             </a>
                         {% endif %}
 
-                        <a class="Pagination-element Pagination-element_current" href="#">
+                        <a class="Pagination-element Pagination-element_current" href="?{{ params.urlencode }}">
                             <span class="Pagination-text">{{ products.number }}</span>
                         </a>
                         {% if products.has_next %}
-                            <a class="Pagination-element" href="?page={{ products.next_page_number }}">
+{#                            <a class="Pagination-element" href="?sort_by={{ sort_by }}&amp;page={{ products.next_page_number }}">#}
+                            <a class="Pagination-element" href="?{{ params.urlencode }}&amp;page={{ products.next_page_number }}">
                                 <span class="Pagination-text">{{ products.next_page_number }}</span>
                             </a>
                             {% if products.number == 1 %}
-                                <a class="Pagination-element" href="?page={{ products.next_page_number|add:"1" }}">
+{#                                <a class="Pagination-element" href="?sort_by={{ sort_by }}&amp;page={{ products.next_page_number|add:"1" }}">#}
+                                <a class="Pagination-element" href="?{{ params.urlencode }}&amp;page={{ products.next_page_number|add:"1" }}">
                                     <span class="Pagination-text">{{ products.next_page_number|add:"1" }}</span>
                                 </a>
                             {% endif %}
@@ -229,7 +275,8 @@
 {#                            <a href="?page={{ products.paginator.num_pages }}">{{ products.paginator.num_pages }}</a>#}
 {#                        {% endif %}#}
 
-                        <a class="Pagination-element Pagination-element_prev" {% if products.has_next %} href="?page={{ products.next_page_number }}" {% endif %}>
+{#                        <a class="Pagination-element Pagination-element_prev" {% if products.has_next %} href="?sort_by={{ sort_by }}&amp;page={{ products.next_page_number }}" {% endif %}>#}
+                        <a class="Pagination-element Pagination-element_prev" {% if products.has_next %} href="?{{ params.urlencode }}&amp;page={{ products.next_page_number }}" {% endif %}>
                             <img src="{% static "assets/img/icons/nextPagination.svg" %}" alt="nextPagination.svg"/>
                         </a>
                     </div>

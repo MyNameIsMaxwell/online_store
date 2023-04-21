@@ -26,114 +26,91 @@
             </div>
             <div class="Section-content">
                 <div class="Orders">
-                    <div class="Order Order_anons">
-                        <div class="Order-personal">
-                            <div class="row">
-                                <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№200</span>&#32;от&#32;<span class="Order-dateOrder">21.07.2020</span></a>
-                                </div>
-                                <div class="row-block">
-                                    <div class="Order-info Order-info_delivery">
-                                        <div class="Order-infoType">Тип доставки:
-                                        </div>
-                                        <div class="Order-infoContent">Обычная доставка
-                                        </div>
+                    {% for order in profile.order.all %}
+                        <div class="Order Order_anons">
+                            <div class="Order-personal">
+                                <div class="row">
+                                    <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№{{ order.id }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created_at|date:"SHORT_DATE_FORMAT"}}</span></a>
                                     </div>
-                                    <div class="Order-info Order-info_pay">
-                                        <div class="Order-infoType">Оплата:
+                                    <div class="row-block">
+                                        <div class="Order-info Order-info_delivery">
+                                            <div class="Order-infoType">Тип доставки:
+                                            </div>
+                                            <div class="Order-infoContent">{{ order.get_delivery_type_display }}
+                                            </div>
                                         </div>
-                                        <div class="Order-infoContent">Онлайн картой
+                                        <div class="Order-info Order-info_pay">
+                                            <div class="Order-infoType">Оплата:
+                                            </div>
+                                            <div class="Order-infoContent">{{ order.payment.get_payment_method_display }}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="Order-info">
-                                        <div class="Order-infoType">Общая стоимость:
+                                        <div class="Order-info">
+                                            <div class="Order-infoType">Общая стоимость:
+                                            </div>
+                                            <div class="Order-infoContent"><span class="Order-price">{{ order.payment.summary_price|floatformat:"2u" }}$</span>
+                                            </div>
                                         </div>
-                                        <div class="Order-infoContent"><span class="Order-price">200.99$</span>
+                                        <div class="Order-info Order-info_status">
+                                            <div class="Order-infoType">Статус:
+                                            </div>
+                                            <div class="Order-infoContent">
+                                                {{ order.get_status_display }}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="Order-info Order-info_status">
-                                        <div class="Order-infoType">Статус:
-                                        </div>
-                                        <div class="Order-infoContent">Не оплачен
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Order Order_anons">
-                        <div class="Order-personal">
-                            <div class="row">
-                                <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№199</span>&#32;от&#32;<span class="Order-dateOrder">20.07.2020</span></a>
-                                </div>
-                                <div class="row-block">
-                                    <div class="Order-info Order-info_delivery">
-                                        <div class="Order-infoType">Тип доставки:
-                                        </div>
-                                        <div class="Order-infoContent">Обычная доставка
-                                        </div>
-                                    </div>
-                                    <div class="Order-info Order-info_pay">
-                                        <div class="Order-infoType">Оплата:
-                                        </div>
-                                        <div class="Order-infoContent">Онлайн картой
-                                        </div>
-                                    </div>
-                                    <div class="Order-info">
-                                        <div class="Order-infoType">Общая стоимость:
-                                        </div>
-                                        <div class="Order-infoContent"><span class="Order-price">100.99$</span>
-                                        </div>
-                                    </div>
-                                    <div class="Order-info Order-info_status">
-                                        <div class="Order-infoType">Статус:
-                                        </div>
-                                        <div class="Order-infoContent">Оплачен
-                                        </div>
-                                    </div>
-                                    <div class="Order-info Order-info_error">
-                                        <div class="Order-infoType">Оплата не прошла:
-                                        </div>
-                                        <div class="Order-infoContent">Оплата не выполнена
-                                        </div>
+                                        {% if not order.payment.status %}
+                                            <div class="Order-info Order-info_error">
+                                                <div class="Order-infoType">Оплата не прошла:
+                                                </div>
+                                                <div class="Order-infoContent">Оплата не выполнена
+                                                </div>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="Order Order_anons">
-                        <div class="Order-personal">
-                            <div class="row">
-                                <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№194</span>&#32;от&#32;<span class="Order-dateOrder">01.07.2020</span></a>
-                                </div>
-                                <div class="row-block">
-                                    <div class="Order-info Order-info_delivery">
-                                        <div class="Order-infoType">Тип доставки:
-                                        </div>
-                                        <div class="Order-infoContent">Обычная доставка
-                                        </div>
-                                    </div>
-                                    <div class="Order-info Order-info_pay">
-                                        <div class="Order-infoType">Оплата:
-                                        </div>
-                                        <div class="Order-infoContent">Онлайн картой
-                                        </div>
-                                    </div>
-                                    <div class="Order-info">
-                                        <div class="Order-infoType">Общая стоимость:
-                                        </div>
-                                        <div class="Order-infoContent"><span class="Order-price">20.00$</span>
-                                        </div>
-                                    </div>
-                                    <div class="Order-info Order-info_status">
-                                        <div class="Order-infoType">Статус:
-                                        </div>
-                                        <div class="Order-infoContent">Доставляется
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+{#                    <div class="Order Order_anons">#}
+{#                        <div class="Order-personal">#}
+{#                            <div class="row">#}
+{#                                <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№199</span>&#32;от&#32;<span class="Order-dateOrder">20.07.2020</span></a>#}
+{#                                </div>#}
+{#                                <div class="row-block">#}
+{#                                    <div class="Order-info Order-info_delivery">#}
+{#                                        <div class="Order-infoType">Тип доставки:#}
+{#                                        </div>#}
+{#                                        <div class="Order-infoContent">Обычная доставка#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="Order-info Order-info_pay">#}
+{#                                        <div class="Order-infoType">Оплата:#}
+{#                                        </div>#}
+{#                                        <div class="Order-infoContent">Онлайн картой#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="Order-info">#}
+{#                                        <div class="Order-infoType">Общая стоимость:#}
+{#                                        </div>#}
+{#                                        <div class="Order-infoContent"><span class="Order-price">100.99$</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="Order-info Order-info_status">#}
+{#                                        <div class="Order-infoType">Статус:#}
+{#                                        </div>#}
+{#                                        <div class="Order-infoContent">Оплачен#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="Order-info Order-info_error">#}
+{#                                        <div class="Order-infoType">Оплата не прошла:#}
+{#                                        </div>#}
+{#                                        <div class="Order-infoContent">Оплата не выполнена#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
             </div>
         </div>

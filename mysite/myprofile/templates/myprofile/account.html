@@ -36,46 +36,58 @@
                             </div><a class="Account-editLink" href="{% url 'myprofile:profile' %}">Редактировать профиль</a>
                         </div>
                     </div>
+                {% for order in profile.order.all %}
                     <div class="Account-group">
                         <div class="Account-column Account-column_full">
                             <div class="Order Order_anons">
                                 <div class="Order-personal">
                                     <div class="row">
-                                        {% for order in profile.order.all %}
-                                            <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№{{ order.id }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created_at|date:"SHORT_DATE_FORMAT"}}</span></a>
-                                                <div class="Account-editLink"><a href="historyorder.html">История заказов</a>
+                                        <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№{{ order.id }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created_at|date:"SHORT_DATE_FORMAT"}}</span></a>
+                                            {% if forloop.first %}
+                                                <div class="Account-editLink"><a href="{% url 'myorder:order-history' %}">История заказов</a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="row-block">
+                                            <div class="Order-info Order-info_delivery">
+                                                <div class="Order-infoType">Тип доставки:
+                                                </div>
+                                                <div class="Order-infoContent">{{ order.get_delivery_type_display }}
                                                 </div>
                                             </div>
-                                            <div class="row-block">
-                                                <div class="Order-info Order-info_delivery">
-                                                    <div class="Order-infoType">Тип доставки:
-                                                    </div>
-                                                    <div class="Order-infoContent">{{ order.get_delivery_type_display }}
-                                                    </div>
+                                            <div class="Order-info Order-info_pay">
+                                                <div class="Order-infoType">Оплата:
                                                 </div>
-                                                <div class="Order-info Order-info_pay">
-                                                    <div class="Order-infoType">Оплата:
-                                                    </div>
-                                                    <div class="Order-infoContent">{{ order.payment.get_payment_method_display }}
-                                                    </div>
-                                                </div>
-                                                <div class="Order-info">
-                                                    <div class="Order-infoType">Общая стоимость:
-                                                    </div>
-                                                    <div class="Order-infoContent">{{ order.payment.summary_price|floatformat:"2u" }}$
-                                                    </div>
-                                                </div>
-                                                <div class="Order-info Order-info_status">
-                                                    <div class="Order-infoType">Статус:
-                                                    </div>
-                                                    <div class="Order-infoContent">
-                                                        {% if order.order.summary_price %} Оплачен
-                                                        {% else %} Не оплачен
-                                                        {% endif %}
-                                                    </div>
+                                                <div class="Order-infoContent">{{ order.payment.get_payment_method_display }}
                                                 </div>
                                             </div>
-                                        {% endfor %}
+                                            <div class="Order-info">
+                                                <div class="Order-infoType">Общая стоимость:
+                                                </div>
+                                                <div class="Order-infoContent">{{ order.payment.summary_price|floatformat:"2u" }}$
+                                                </div>
+                                            </div>
+                                            <div class="Order-info Order-info_status">
+                                                <div class="Order-infoType">Статус:
+                                                </div>
+                                                <div class="Order-infoContent">
+                                                    {% if order.payment.status %} Оплачен
+                                                    {% else %} Не оплачен
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
                                         
 {#                                        <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№200</span>&#32;от&#32;<span class="Order-dateOrder">21.07.2020</span></a>#}
 {#                                            <div class="Account-editLink"><a href="historyorder.html">История заказов</a>#}
@@ -107,13 +119,3 @@
 {#                                                </div>#}
 {#                                            </div>#}
 {#                                        </div>#}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}

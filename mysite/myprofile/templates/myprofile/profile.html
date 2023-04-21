@@ -8,7 +8,7 @@
                     <h1 class="Middle-title">Профиль
                     </h1>
                     <ul class="breadcrumbs Middle-breadcrumbs">
-                        <li class="breadcrumbs-item"><a href="index.html">home</a>
+                        <li class="breadcrumbs-item"><a href="{% url 'myprofile:personal-account' %}">home</a>
                         </li>
                         <li class="breadcrumbs-item breadcrumbs-item_current"><span>Профиль</span>
                         </li>
@@ -40,50 +40,74 @@
                 </div>
                 <div class="Section-content">
                     <div class="Profile">
-                        <form class="form Profile-form" action="#" method="post">
+                        <form class="form Profile-form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="avatar">Аватар
+{#                                        {% for field in form %}#}
+{#                                        {% endfor %}#}
+                                        <label class="form-label" for="avatar">{{ form.image.label }}
                                         </label>
                                         <div class="Profile-avatar">
-                                            <div class="Profile-img"><img src="{% static "assets/img/content/home/card.jpg" %}" alt="card.jpg" />
-                                            </div>
-                                            <label class="Profile-fileLabel" for="avatar">Выберите аватар
-                                            </label>
-                                            <input class="Profile-file form-input" id="avatar" name="avatar" type="file" />
+                                            {% if profile.image %}
+                                                <div class="Profile-img"><img src="{{ profile.image.url }}" alt="profile_photo.jpg" />
+                                                </div>
+{#                                                <label class="Profile-fileLabel" for="avatar">Выберите аватар#}
+{#                                                </label>#}
+                                                {{ form.image }}
+                                            {% else %}
+                                                <label class="Profile-fileLabel" for="avatar"><img src="{% static "assets/img/icons/upload.png" %}" alt="#.png" />Загрузить фото
+                                                </label>
+{#                                                <input class="Profile-file form-input" id="avatar" name="avatar" type="file" data-validate="onlyImgAvatar" />#}
+                                                {{ form.image }}
+                                            {% endif %}
+{#                                            <input class="Profile-file form-input" id="avatar" name="avatar" type="file" />#}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="name">ФИО
+                                        <label class="form-label" for="name">{{ form.name.label }}
                                         </label>
-                                        <input class="form-input" id="name" name="name" type="text" value="Иванов Иван Иванович" />
+                                        {{ form.name }}
                                     </div>
                                 </div>
                                 <div class="row-block">
                                     <div class="form-group">
-                                        <label class="form-label" for="phone">Телефон
+                                        <label class="form-label" for="phone">{{ form.phone_number.label }}
                                         </label>
-                                        <input class="form-input" id="phone" name="phone" type="text" value="+70000000000" />
+                                        {{ form.phone_number }}
+{#                                        <input class="form-input" id="phone" name="phone" type="text" value="+70000000000" />#}
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="mail">E-mail
+                                        <label class="form-label" for="mail">{{ form.email.label }}
                                         </label>
-                                        <input class="form-input" id="mail" name="mail" type="text" value="send@test.test" />
+                                        {{ form.email }}
+{#                                        <input class="form-input" id="mail" name="mail" type="text" value="send@test.test" />#}
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="password">Пароль
+                                        <label class="form-label" for="password">{{ form.password.label }}
                                         </label>
-                                        <input class="form-input" id="password" name="password" type="password" placeholder="Тут можно изменить пароль" />
+                                        {{ form.password }}
+{#                                        <input class="form-input" id="password" name="password" type="password" placeholder="Тут можно изменить пароль" />#}
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label" for="passwordReply">Подтверждение пароля
+                                        <label class="form-label" for="passwordReply">{{ form.password1.label }}
                                         </label>
-                                        <input class="form-input" id="passwordReply" name="passwordReply" type="password" placeholder="Введите пароль повторно" />
+                                        {{ form.password1 }}
+                                        {% if form.errors %}
+                                            <ul>
+                                                {% for field_errors in form.errors.values %}
+                                                    {% for error in field_errors %}
+                                                        <span style="color: #9d2424">{{ error }}</span>
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+{#                                        <input class="form-input" id="passwordReply" name="passwordReply" type="password" placeholder="Введите пароль повторно" />#}
                                     </div>
                                     <div class="form-group">
                                         <div class="Profile-btn">
-                                            <button class="btn btn_success">Сохранить
+                                            <button class="btn btn_success" type="submit">Сохранить
                                             </button>
                                         </div>
                                     </div>

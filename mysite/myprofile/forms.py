@@ -8,7 +8,12 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ["name", "phone_number", "email", "image"]
         widgets = {
-            "name": forms.TextInput(attrs={'initial': model.name}),
+            "name": forms.TextInput(attrs={'class': "form-input",
+
+                                           }),
+            "phone_number": forms.TextInput(attrs={'class': "form-input",}),
+            "email": forms.TextInput(attrs={'class': "form-input"}),
+            "image": forms.FileInput(attrs={"class": "Profile-fileLabel Profile-file"}),
         }
         labels = {
             "name": "ФИО",
@@ -17,36 +22,24 @@ class UserProfileForm(forms.ModelForm):
             "image": "Аватар",
         }
 
-        password = forms.CharField(max_length=30,
-                                   min_length=7,
-                                   label="Пароль",
-                                   widget=forms.PasswordInput(attrs={'placeholder': 'Тут можно изменить пароль'})
-                                   )
+    password = forms.CharField(max_length=30,
+                               min_length=7,
+                               label="Пароль",
+                               required=False,
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Тут можно изменить пароль'})
+                               )
 
-        password1 = forms.CharField(max_length=30,
-                                   min_length=7,
-                                   label="Пароль",
-                                   widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль повторно'})
-                                   )
+    password1 = forms.CharField(max_length=30,
+                                min_length=7,
+                                label="Подтверждение пароля",
+                                required=False,
+                                widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль повторно'})
+                                )
 
-    # name = forms.CharField(max_length=50,
-    #                        min_length=2,
-    #                        label="",
-    #                        widget=forms.TextInput(attrs={'placeholder': 'Имя'})
-    #                        )
-    #
-    # phone_number = forms.CharField(max_length=20,
-    #                        min_length=2,
-    #                        label="",
-    #                        widget=forms.TextInput(attrs={'placeholder': 'Имя'})
-    #                        )
-    #
-    # email = forms.EmailField(label="",
-    #                          widget=forms.TextInput(attrs={'placeholder': 'E-mail'})
-    #                          )
-    # password = forms.CharField(max_length=30,
-    #                            min_length=7,
-    #                            label="",
-    #                            widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'})
-    #                            )
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password1 = cleaned_data.get('password1')
 
+        if password and password1 and password != password1:
+            raise forms.ValidationError("Пароли не совпадают")

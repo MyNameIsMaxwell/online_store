@@ -42,7 +42,6 @@ def product_directory_path(instance, filename):
 
 class Product(models.Model):
     class Meta:
-        ordering = ['-created_at', 'category']
         verbose_name = 'Продукт'
         verbose_name_plural = "Продукты"
 
