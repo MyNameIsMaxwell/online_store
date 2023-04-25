@@ -11,5 +11,4 @@ def split(str, key):
 @register.filter(name='sum')
 def sum_price(products):
     summary_price = sum(products.values_list('product__price', flat=True))
-    print()
     return summary_price

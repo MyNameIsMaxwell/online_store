@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from myauth.models import UserProfile
 from myprofile.forms import UserProfileForm
@@ -44,8 +45,14 @@ def cart_view(request):
 
     if request.method == "POST":
         if "create_order" in request.POST:
-            for product in profile.cart.products.all():
-                print(product.product.name)
+            quantity = request.POST.getlist('amount')
+            print(list(map(lambda x, y: {x.product.name: y}, profile.cart.products.all(), quantity)))
+            # for cart_product, cart_product_amount in profile.cart.products.all(), quantity:
+            #     # print(request.POST.get('amount'))
+            #     print(cart_product.product.name)
+            #     print(cart_product_amount)
+                # print(cart_product.quantity)
+            return redirect(reverse('myorder:order'))
         elif "delete" in request.POST:
             product_id = request.POST["delete"]
             item = profile.cart.products.get(id=product_id)

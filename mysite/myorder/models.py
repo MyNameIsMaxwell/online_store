@@ -15,6 +15,9 @@ class Order(models.Model):
     ORDER_STATUS = [('Not paid', 'Не оплачен'), ('Paid', 'Оплачен'), ('Delivery', 'Доставляется'), ('Awaiting', 'Ожидает выдачи'), ('Done', 'Выдан')]
 
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='order', verbose_name="Пользователь")
+    recipient = models.CharField(max_length=50, verbose_name="Имя")
+    phone_number = models.CharField(max_length=20, verbose_name="Номер телефона")
+    email = models.EmailField(blank=False, verbose_name="Почта")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
     delivery_type = models.CharField(max_length=10, choices=DELIVERY_TYPE_CHOICES, default='Common', verbose_name="Тип доставки")  # .label, чтобы вывести значение
@@ -24,6 +27,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user.name}{self.pk}"
+
+    def summary_price(self):
+        order_items = self.items.all()
+        total_price = sum([item.quantity*item.product.price for item in order_items])
+        return total_price
 
 
 class OrderItem(models.Model):

@@ -2,6 +2,20 @@
 {% load static %}
 
 {% block middle-content %}
+{#    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>#}
+{#      <script>#}
+{#        $(document).ready(function() {#}
+{#          var currentUrl = window.location.href;#}
+{#          $('ul.menu_vt li').each(function() {#}
+{#            var menuItemUrl = $(this).find('a').attr('href');#}
+{#            if (currentUrl.indexOf(menuItemUrl) != -1) {#}
+{#              $(this).addClass('menu-item_ACTIVE');#}
+{#            } else {#}
+{#              $(this).removeClass('menu-item_ACTIVE');#}
+{#            }#}
+{#          });#}
+{#        });#}
+{#      </script>#}
     <div class="Section Section_column Section_columnRight Section_columnWide Order">
         <div class="wrap">
             <div class="Section-column">
@@ -12,7 +26,19 @@
                     </header>
                     <div class="Section-columnContent">
                         <div class="NavigateProfile">
-                            <ul class="menu menu_vt">
+                            <ul class="menu menu_vt Order-navigate">
+{#                                <li {% if '?step1' in request.path %}class="menu-item_ACTIVE menu-item" {% else %}class="menu-item"{% endif %}>#}
+{#                                    <a class="menu-link" href="">Шаг 1. Параметры пользователя</a>#}
+{#                                </li>#}
+{#                                <li {% if '?step2' in request.path %}class="menu-item_ACTIVE menu-item" {% else %}class="menu-item"{% endif %}>#}
+{#                                    <a class="menu-link" href="">Шаг 2. Способ доставки</a>#}
+{#                                </li>#}
+{#                                <li {% if request.path == '/step3/' %}class="menu-item_ACTIVE menu-item" {% else %}class="menu-item"{% endif %}>#}
+{#                                    <a class="menu-link" href="/step3/">Шаг 3. Способ оплаты</a>#}
+{#                                </li>#}
+{#                                <li {% if request.path == '/step4/' %}class="menu-item_ACTIVE menu-item" {% else %}class="menu-item"{% endif %}>#}
+{#                                    <a class="menu-link" href="/step4/">Шаг 4. Подтверждение заказа</a>#}
+{#                                </li>#}
                                 <li class="menu-item_ACTIVE menu-item"><a class="menu-link" href="#step1">Шаг 1. Параметры пользователя</a>
                                 </li>
                                 <li class="menu-item"><a class="menu-link" href="#step2">Шаг 2. Способ доставки</a>
@@ -21,7 +47,6 @@
                                 </li>
                                 <li class="menu-item"><a class="menu-link" href="#step4">Шаг 4. Подтверждение заказа</a>
                                 </li>
-
                             </ul>
                         </div>
                     </div>
@@ -31,7 +56,8 @@
 
 
             <div class="Section-content">
-                <form class="form" action="#" method="post">
+                <form class="form" method="post">
+                    {% csrf_token %}
                     <div class="Order-block Order-block_OPEN" id="step1">
                         <header class="Section-header Section-header_sm">
                             <h2 class="Section-title">Шаг 1. Параметры пользователя
@@ -40,89 +66,93 @@
                         <div class="row">
                             <div class="row-block">
                                 <div class="form-group">
-                                    <label class="form-label" for="name">ФИО
-                                    </label>
-                                    <input class="form-input" id="name" name="name" type="text" value="Иванов Иван Иванович" />
+                                    <label class="form-label" for="id_name">{{ form1.name.label }}</label>
+                                    {{ form1.name }}
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="phone">Телефон
-                                    </label>
-                                    <input class="form-input" id="phone" name="phone" type="text" value="+70000000000" />
+                                    <label class="form-label" for="id_phone_number">{{ form1.phone_number.label }}</label>
+                                    {{ form1.phone_number }}
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label" for="mail">E-mail
-                                    </label>
-                                    <input class="form-input" id="mail" name="mail" type="text" value="" data-validate="require" />
+                                    <label class="form-label" for="id_email">{{ form1.email.label }}</label>
+                                    {{ form1.email }}
                                 </div>
                             </div>
+
                             <div class="row-block">
-                                <div class="form-group">
-                                    <label class="form-label" for="password">Пароль
-                                    </label>
-                                    <input class="form-input" id="password" name="password" type="password" placeholder="Тут можно изменить пароль" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="passwordReply">Подтверждение пароля
-                                    </label>
-                                    <input class="form-input" id="passwordReply" name="passwordReply" type="password" placeholder="Введите пароль повторно" />
-                                </div>
-                                <div class="form-group"><a class="btn btn_muted Order-btnReg" href="#">Я уже зарегистрирован</a>
-                                </div>
+                                {% if not user.is_authenticated %}
+                                    <div class="form-group">
+                                        {{ form1.password }}
+                                        <label class="form-label" for="password">Пароль
+                                        </label>
+                                        <input class="form-input" id="password" name="password" type="password" placeholder="Тут можно изменить пароль" />
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form1.password1 }}
+                                    </div>
+                                    <div class="form-group"><a class="btn btn_muted Order-btnReg" href="#">Я уже зарегистрирован</a>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
-                        <div class="Order-footer"><a class="btn btn_success Order-next" href="#step2">Дальше</a>
+                        <input type="hidden" name="step" value="2">
+                        <div class="Order-footer"><a class="btn btn_success Order-next" href='#step2'>Дальше</a>
                         </div>
+{#                        <div class="Order-footer"><button class="btn btn_success" type='submit'>Дальше</button>#}
+{#                        </div>#}
                     </div>
+{#                </form>#}
+{#                <form class="form" method="post">#}
                     <div class="Order-block" id="step2">
                         <header class="Section-header Section-header_sm">
                             <h2 class="Section-title">Шаг 2. Способ доставки
                             </h2>
                         </header>
                         <div class="form-group">
+                            {% for radio in form2.delivery_type %}
                             <div>
                                 <label class="toggle">
-                                    <input type="radio" name="delivery" value="ordinary" checked="checked" /><span class="toggle-box"></span><span class="toggle-text">Обычная доставка</span>
+                                    {{ radio.tag }}
+                                    <span class="toggle-box"></span>
+                                    <span class="toggle-text">{{ radio.choice_label }}</span>
                                 </label>
                             </div>
-                            <div>
-                                <label class="toggle">
-                                    <input type="radio" name="delivery" value="express" /><span class="toggle-box"></span><span class="toggle-text">Экспресс доставка</span>
-                                </label>
-                            </div>
+                            {% endfor %}
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="city">Город
+                            <label class="form-label" for="city">{{ form2.city.label }}
                             </label>
-                            <input class="form-input" id="city" name="city" type="text" />
+                            {{ form2.city }}
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="address">Адрес
+                            <label class="form-label" for="address">{{ form2.address.label }}
                             </label>
-                            <textarea class="form-textarea" name="address" id="address"></textarea>
+                            {{ form2.address }}
                         </div>
                         <div class="Order-footer"><a class="btn btn_success Order-next" href="#step3">Дальше</a>
                         </div>
                     </div>
+{#                </form>#}
                     <div class="Order-block" id="step3">
                         <header class="Section-header Section-header_sm">
                             <h2 class="Section-title">Шаг 3. Способ оплаты
                             </h2>
                         </header>
                         <div class="form-group">
-                            <div>
-                                <label class="toggle">
-                                    <input type="radio" name="pay" value="online" checked="checked" /><span class="toggle-box"></span><span class="toggle-text">Онлайн картой</span>
-                                </label>
-                            </div>
-                            <div>
-                                <label class="toggle">
-                                    <input type="radio" name="pay" value="someone" /><span class="toggle-box"></span><span class="toggle-text">Онлайн со случайного чужого счета</span>
-                                </label>
-                            </div>
+                            {% for radio in form3.payment_method %}
+                                <div>
+                                    <label class="toggle">
+                                        {{ radio.tag }}
+                                        <span class="toggle-box"></span>
+                                        <span class="toggle-text">{{ radio.choice_label }}</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="Order-footer"><a class="btn btn_success Order-next" href="#step4">Дальше</a>
+                        <div class="Order-footer"><button class="btn btn_success" type="submit"># ЗДЕСЬ НУЖЕН AJAX<a class="Order-next" href="#step4">Дальше</a></button>
                         </div>
                     </div>
+                </form>
                     <div class="Order-block" id="step4">
                         <header class="Section-header Section-header_sm">
                             <h2 class="Section-title">Шаг 4. Подтверждение заказа
@@ -248,8 +278,78 @@
                             </div>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </div>
+
 {% endblock %}
+
+{#<div class="Section Section_column Section_columnRight Section_columnWide Order">#}
+{#    <div class="wrap">#}
+{#        <div class="Section-column">#}
+{#            <div class="Section-columnSection">#}
+{#                <header class="Section-header">#}
+{#                    <strong class="Section-title">Прогресс заполнения#}
+{#                    </strong>#}
+{#                </header>#}
+{#                <div class="Section-columnContent">#}
+{#                    <div class="NavigateProfile">#}
+{#                        <ul class="menu menu_vt">#}
+{#                            <li {% if '?step1' in request.path %}class="menu-item_ACTIVE menu-item" {% else %}class="menu-item"{% endif %}>#}
+{#                                <a class="menu-link" href="">Шаг 1. Параметры пользователя</a>#}
+{#                            </li>#}
+{#                            <li {% if '?step2' in request.path %}class="menu-item_ACTIVE menu-item" {% else %}class="menu-item"{% endif %}>#}
+{#                                <a class="menu-link" href="">Шаг 2. Способ доставки</a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="Section-content">#}
+{#            <form class="form" method="post">#}
+{#                {% csrf_token %}#}
+{#                <div class="Order-block Order-block_OPEN" id="step1">#}
+{#                    <header class="Section-header Section-header_sm">#}
+{#                        <h2 class="Section-title">Шаг 1. Параметры пользователя#}
+{#                        </h2>#}
+{#                    </header>#}
+{#                    <div class="row">#}
+{#                        <div class="row-block">#}
+{#                            <div class="form-group">#}
+{#                                <label class="form-label" for="id_name">{{ form.name.label }}</label>#}
+{#                                {{ form.name }}#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label class="form-label" for="id_phone_number">{{ form.phone_number.label }}</label>#}
+{#                                {{ form.phone_number }}#}
+{#                            </div>#}
+{#                            <div class="form-group">#}
+{#                                <label class="form-label" for="id_email">{{ form.email.label }}</label>#}
+{#                                {{ form.email }}#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{##}
+{#                        <div class="row-block">#}
+{#                            {% if not user.is_authenticated %}#}
+{#                                <div class="form-group">#}
+{#                                    {{ form.password }}#}
+{#                                </div>#}
+{#                                <div class="form-group">#}
+{#                                    {{ form.password1 }}#}
+{#                                </div>#}
+{#                                <div class="form-group"><a class="btn btn_muted Order-btnReg" href="#">Я уже зарегистрирован</a>#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <input type="hidden" name="step" value="2">#}
+{#                    <div class="Order-footer"><button class="btn btn_success Order-next" type="submit" name="step2">Дальше</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}

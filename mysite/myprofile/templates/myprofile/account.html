@@ -42,7 +42,7 @@
                             <div class="Order Order_anons">
                                 <div class="Order-personal">
                                     <div class="row">
-                                        <div class="row-block"><a class="Order-title" href="oneorder.html">Заказ&#32;<span class="Order-numberOrder">№{{ order.id }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created_at|date:"SHORT_DATE_FORMAT"}}</span></a>
+                                        <div class="row-block"><a class="Order-title" href="{% url 'myorder:order-details' order_id=order.id %}">Заказ&#32;<span class="Order-numberOrder">№{{ order.id }}</span>&#32;от&#32;<span class="Order-dateOrder">{{ order.created_at|date:"SHORT_DATE_FORMAT"}}</span></a>
                                             {% if forloop.first %}
                                                 <div class="Account-editLink"><a href="{% url 'myorder:order-history' %}">История заказов</a>
                                                 </div>

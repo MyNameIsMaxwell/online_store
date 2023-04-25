@@ -13,3 +13,20 @@ class SortForm(forms.Form):
 
     available = forms.BooleanField(required=False)
 
+
+# class OrderForm(forms.ModelForm):
+#     class Meta:
+#         model = UserProfile
+#         fields = ('name', 'phone_number', 'email')
+#
+#         labels = {
+#             'name': "ФИО",
+#             'phone_number': "Телефон",
+#             'email': "E-mail"
+#         }
+#
+#         widgets = {
+#             "name": forms.TextInput(attrs={'class': "form-input"}),
+#             "phone_number": forms.TextInput(attrs={'class': "form-input"}),
+#             "email": forms.TextInput(attrs={'class': "form-input"}),
+#         }
