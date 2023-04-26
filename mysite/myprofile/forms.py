@@ -11,7 +11,7 @@ class UserProfileForm(forms.ModelForm):
         fields = ["name", "phone_number", "email", "image"]
         widgets = {
             "name": forms.TextInput(attrs={'class': "form-input"}),
-            "phone_number": forms.TextInput(attrs={'class': "form-input"}),
+            "phone_number": forms.TextInput(attrs={'id': "phone-mask", 'class': "form-input"}),
             "email": forms.TextInput(attrs={'class': "form-input"}),
             "image": forms.FileInput(attrs={"class": "Profile-fileLabel Profile-file"}),
         }

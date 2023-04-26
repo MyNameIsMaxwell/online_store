@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.db.models import F
 
 from myauth.models import UserProfile
 from mycatalog.models import Product
@@ -47,3 +48,8 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.product.name}/{self.order.pk}"
+
+    def __save__(self, *args, **kwargs):
+        # Product.objects.filter(product=self.product).update(purchases=F("purchases") + self.quantity, count=F("count") - self.quantity)
+        product = Product.objects.filter(product=self.product).update(purchases=F("purchases") + self.quantity)
+        super().save(*args, **kwargs)

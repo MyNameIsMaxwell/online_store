@@ -57,17 +57,17 @@ class ProductImagesInline(admin.TabularInline):
 @admin.register(Product)
 class Product(admin.ModelAdmin):
     inlines = [ProductImagesInline, ]
-    list_display = "pk", "name", "category", "price"
+    list_display = "pk", "name", "category", "price", "limited"
     list_display_links = "pk", "name"
     ordering = "name", "category"
     search_fields = "pk", "name"
     list_filter = "category",
     fieldsets = [
         (None, {
-            "fields": ("name", "active"),
+            "fields": ("name", "active", "limited"),
         }),
         ("Детали", {
-            "fields": ("description", "price", "category", "tags"),
+            "fields": ("description", "price", "category", "tags", "count", "purchases"),
             "classes": ("wide", "collapse",),
         })
     ]

@@ -1,3 +1,5 @@
+import re
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -28,7 +30,8 @@ def profile_view(request):
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
             password1 = form.cleaned_data["password1"]
-            phone_number = form.cleaned_data["phone_number"]
+            phone_number = re.sub(r'\D', '', form.cleaned_data["phone_number"])[1:]
+
             if 'image' in request.FILES:
                 image = request.FILES['image']
             else:

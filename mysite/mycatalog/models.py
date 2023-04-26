@@ -26,6 +26,7 @@ class ProductCategory(models.Model):
 
     name = models.CharField(max_length=100, verbose_name="Название")
     active = models.BooleanField(default=True, verbose_name="Активна")
+    chosen = models.BooleanField(default=False, verbose_name="Избранный")
     parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children')
 
     def __str__(self):
@@ -53,6 +54,9 @@ class Product(models.Model):
     tags = models.ManyToManyField(ProductTags, related_name='tags', verbose_name="Тэг")
     # seller = models.ForeignKey(ProductCompany, on_delete=models.SET_NULL)
     active = models.BooleanField(default=True, verbose_name="Активен")
+    limited = models.BooleanField(default=False, verbose_name="Ограниченный тираж")
+    count = models.PositiveIntegerField(default=0)
+    purchases = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name

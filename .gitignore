@@ -160,3 +160,8 @@ cython_debug/
 .idea/
 
 *.csv
+
+mysite/node_modules
+/mysite/package.json
+/mysite/package-lock.json
+mysite/media

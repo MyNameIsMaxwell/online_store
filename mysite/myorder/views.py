@@ -12,7 +12,6 @@ def order_view(request):
     profile = UserProfile.objects.get(user=request.user)
     params = QueryDict(mutable=True)
     # profile_dict = model_to_dict(profile)
-    # print(params)
     form_delivery = DeliveryOrderForm
     form_auth = UserProfileForm(instance=profile)
     form_payment = PaymentOrderForm
@@ -20,7 +19,6 @@ def order_view(request):
         # return reverse('myorder:order', kwargs={'step':})
     print(request.GET)
     print(request.POST)
-    # print(request.POST.get('step'))
     context = {
         'form1': form_auth,
         'form2': form_delivery,

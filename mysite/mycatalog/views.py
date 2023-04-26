@@ -88,8 +88,14 @@ def catalog_view(request):
 
 
 def main_view(request):
+    selected_category = ProductCategory.objects.filter(chosen=True)[:3]
+    popular_products = Product.objects.order_by('-id', '-purchases')[:8]
+    limited_products = Product.objects.filter(limited=True)[:16]
     context = {
         "categories": ProductCategory.objects.filter(active=True, parent=None),
+        "selected_category": selected_category,
+        "popular_products": popular_products,
+        "limited_products": limited_products,
     }
     return render(request, 'catalog/main.html', context=context)
 
